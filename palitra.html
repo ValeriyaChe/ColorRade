@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=M+PLUS+Rounded+1c&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
+    <title>Палитра</title>
+    <link rel="stylesheet" href="palitra.css">
+</head>
+<header>
+
+        <div>
+            <a href="/">
+                <img src="public/Paint_Palette-80_icon-icons.com_57294.ico"/>
+            </a>
+            <a href="/">
+                <h4>ColorPade</h4>
+            </a>
+        </div>
+        <div>
+            <a href="./palitra.html">
+                <h4>Палитра</h4>
+            </a>
+        </div>
+</header>
+<body>
+<br/><br/><br/><br/><br/><br/>
+<div id="colorWheelBox">
+    <canvas id="colorWheel" width="650" height="650" style="border: 1px solid #ccc;"></canvas>
+</div>
+<script>
+    const canvas = document.getElementById("colorWheel");
+    const ctx = canvas.getContext("2d");
+
+    // Центр и радиус круга
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const radius = 300;
+
+    // Цвета для секторов
+    const colors = [
+        "#FF0000", "#FF6600", "#FFCC00", "#FFFF00", "#66CC00", "#009933",
+        "#00CCCC", "#0066CC", "#0000FF", "#660099", "#990066", "#CC0033"
+    ];
+
+    // Ссылки для каждого сектора
+    const links = [
+        "blue.html",
+        "darkblue.html",
+        "gray.html",
+        "violet.html",
+        "lilac.html",
+        "pink.html",
+        "red.html",
+        "orange.html",
+        "orange-yellow.html",
+        "yellow.html",
+        "yellow-green.html",
+        "green.html",
+    ];
+
+    // Количество секторов
+    const sectorCount = colors.length;
+
+    // Угол одного сектора
+    const angleStep = (2 * Math.PI) / sectorCount;
+
+    // Рисуем круг с секторами
+    for (let i = 0; i < sectorCount; i++) {
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.arc(centerX, centerY, radius, i * angleStep, (i + 1) * angleStep);
+        ctx.closePath();
+        ctx.fillStyle = colors[i];
+        ctx.fill();
+    }
+
+    // Добавляем обработчик кликов
+    canvas.addEventListener("click", (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        // Вычисляем угол и расстояние от центра
+        const dx = mouseX - centerX;
+        const dy = mouseY - centerY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        // Проверяем, попали ли клик внутрь круга
+        if (distance <= radius) {
+            const angle = Math.atan2(dy, dx) + Math.PI; // Угол от 0 до 2π
+
+            // Определяем сектор по углу
+            const sectorIndex = Math.floor(angle / angleStep);
+   
+
+            // Переход на соответствующую ссылку
+            window.location.href = links[sectorIndex];
+        }
+    });
+</script>
+        <footer>
+        <div class="container">
+            <p>Чемодурова Валерия Александровна<br>
+            Все материалы, ссылки, IP, товарные знаки использованы исключительно в образовательных целях, без какой либо выгоды включая экономической. Материалы, ссылки, IP, товарные знаки не предпологаются использованием третьими лицами для реализации своих проектов включая образовательных!</p>
+    </div>
+</footer>
+</body>
+</html>      
